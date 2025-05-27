@@ -1,0 +1,20 @@
+name: Java HelloWorld CI # ワークフローの名前
+
+on: [push] # コードがリポジトリにプッシュされたときにワークフローを実行
+
+jobs: # ワークフロー内のジョブを定義
+  build: # ビルドジョブ
+    runs-on: ubuntu-latest # ジョブを実行するOS環境 (Ubuntuの最新版)
+
+    steps: # ジョブ内のステップを定義
+    - uses: actions/checkout@v4 # リポジトリのコードを仮想環境にチェックアウト
+    - name: Set up JDK 17 # Java Development Kit (JDK) 17をセットアップ
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17' # 使用するJavaのバージョン
+        distribution: 'temurin' # Javaのディストリビューション
+        # cache: maven # この行は削除またはコメントアウトしてください。pom.xmlがないとエラーになります。
+    - name: Compile and run HelloWorld # Javaコードをコンパイルして実行
+      run: | # 複数行のシェルコマンド
+        javac HelloWorld.java # HelloWorld.javaをコンパイル
+        java HelloWorld # コンパイルされたHelloWorldクラスを実行
